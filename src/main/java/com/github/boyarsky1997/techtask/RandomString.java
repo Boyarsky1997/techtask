@@ -3,7 +3,6 @@ package com.github.boyarsky1997.techtask;
 import java.util.Random;
 
 public class RandomString {
-
     private static final char[] DICTIONARY =
             "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm".toCharArray();
     private static final int MIN_VALUE = 2;
@@ -31,5 +30,4 @@ public class RandomString {
         }
         return result.toString();
     }
-
 }
