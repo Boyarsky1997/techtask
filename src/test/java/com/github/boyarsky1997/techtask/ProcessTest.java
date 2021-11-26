@@ -1,49 +1,62 @@
 package com.github.boyarsky1997.techtask;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ProcessTest {
-    @Test
-    public void testNumberDuplicates() {
-        int actual = Process.numberDuplicates("RrsrAas");
-        Assertions.assertEquals(2, actual);
+
+    static Object[][] testNumberDuplicates() {
+        return new Object[][]{
+                {"RrsrAas", 2},
+                {"RsrAa", 0},
+                {"aa", 1},
+                {"RRrraAaffA", 5},
+                {"lllllll", 1},
+                {"RrrrrfF", 1},
+                {"", 0},
+                {"RsRrddAafA", 3}
+        };
     }
 
-    @Test
-    public void testNumberDuplicatesEqualsZero() {
-        int actual = Process.numberDuplicates("RsrAa");
-        Assertions.assertEquals(0, actual);
+    static Object[][] testProcessing() {
+        return new Object[][]{
+                {Arrays.asList("ariacn", "avcd", "adddfga", "drrrrrddff", "kk"), 2, "avcddrrrrrddff"},
+                {Arrays.asList("ariaacaaacn", "avcd", "adddfga", "drrrrrddff", "kdf"), 2, "avcd"},
+                {Arrays.asList("aricn", "avcd", "adddfga", "drrrrrddff", "kkkkkkkkkkkkkddf"), 2, "drrrrrddff"},
+                {Arrays.asList("ariannnnndnndnndndnn", "avcd", "adddfga", "drrrrrddff", "kkkkkkkkkkkkkddfdf"), 3, "avcd"},
+                {Arrays.asList("ariannnnndndnn", "avcd", "adddfga", "drrrrrrrrrrrrrrrrrrddff", "kkkkkkkkkkkkkddfdf"), 3, "adddfgakkkkkkkkkkkkkddfdf"}
+        };
     }
 
-    @Test
-    public void testNumberDuplicatesEqualUpperChars() {
-        int actual = Process.numberDuplicates("RsRrAafA");
-        Assertions.assertEquals(2, actual);
+    static Object[][] testConcatenate() {
+        return new Object[][]{
+                {Arrays.asList("ariacn", "avcd", "adddfga", "drrrrrddff", "kk"), 2, "avcddrrrrrddff"},
+                {Arrays.asList("ariaacaaacn", "avcd", "adddfga", "drrrrrddff", "kdf"), 0, "avcd"},
+                {Arrays.asList("aricn", "avcd", "adddfga", "drrrrrddff", "kkkkkkkkkkkkkddf"), 1, "aricnadddfga"},
+                {Arrays.asList("ariannnnndnndnndndnn", "avcd", "adddfga", "drrrrrddff", "kkkkkkkkkkkkkddfdf"), 3, "adddfgakkkkkkkkkkkkkddfdf"},
+                {Arrays.asList("ariannnnndndnn", "avcd", "adddfga", "drrrrrrrrrrrrrrrrrrddff", "kkkkkkkkkkkkkddfdf"), 4, "drrrrrrrrrrrrrrrrrrddff"}
+        };
     }
 
-    @Test
-    public void testProcessing() {
-        List<String> strings = Arrays.asList("ariacn", "avcd", "adddfga", "drrrrrddff", "kk");
-        String actual = Process.processing(strings, 2);
-        Assertions.assertEquals("avcddrrrrrddff", actual);
+    @ParameterizedTest
+    @MethodSource("testNumberDuplicates")
+    public void dataProviderTest1(String a, int expected) {
+        Assertions.assertEquals(expected, Process.numberDuplicates(a));
     }
 
-    @Test
-    public void testProcessing1() {
-        List<String> strings = Arrays.asList("ariaacaaacn", "avcd", "adddfga", "drrrrrddff", "kdf");
-        String actual = Process.processing(strings, 2);
-        Assertions.assertEquals("avcd", actual);
+    @ParameterizedTest
+    @MethodSource("testProcessing")
+    public void dataProviderTest2(List<String> a, int b, String expected) {
+        Assertions.assertEquals(expected, Process.processing(a, b));
     }
 
-    @Test
-    public void testProcessing2() {
-        List<String> strings = Arrays.asList("aricn", "avcd", "adddfga", "drrrrrddff", "kkkkkkkkkkkkkddf");
-        String actual = Process.processing(strings, 2);
-        Assertions.assertEquals("drrrrrddff", actual);
+    @ParameterizedTest
+    @MethodSource("testConcatenate")
+    public void dataProviderTest3(List<String> a, int b, String expected) {
+        Assertions.assertEquals(expected, Process.concatenate(a, b));
     }
-
 }
