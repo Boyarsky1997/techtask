@@ -14,7 +14,7 @@ public class ProcessTest {
     }
 
     @Test
-    public void testNumberDuplicatesEqualsNull() {
+    public void testNumberDuplicatesEqualsZero() {
         int actual = Process.numberDuplicates("RsrAa");
         Assertions.assertEquals(0, actual);
     }
@@ -29,21 +29,21 @@ public class ProcessTest {
     public void testProcessing() {
         List<String> strings = Arrays.asList("ariacn", "avcd", "adddfga", "drrrrrddff", "kk");
         String actual = Process.processing(strings, 2);
-        Assertions.assertEquals("ariacnkk", actual);
+        Assertions.assertEquals("avcddrrrrrddff", actual);
     }
 
     @Test
     public void testProcessing1() {
-        List<String> strings = Arrays.asList("ariacn", "avcd", "adddfga", "drrrrrddff", "kdf");
+        List<String> strings = Arrays.asList("ariaacaaacn", "avcd", "adddfga", "drrrrrddff", "kdf");
         String actual = Process.processing(strings, 2);
-        Assertions.assertEquals("ariacn", actual);
+        Assertions.assertEquals("avcd", actual);
     }
 
     @Test
     public void testProcessing2() {
-        List<String> strings = Arrays.asList("aricn", "avcd", "adddfga", "drrrrrddff", "kddf");
+        List<String> strings = Arrays.asList("aricn", "avcd", "adddfga", "drrrrrddff", "kkkkkkkkkkkkkddf");
         String actual = Process.processing(strings, 2);
-        Assertions.assertEquals("kddf", actual);
+        Assertions.assertEquals("drrrrrddff", actual);
     }
 
 }

@@ -1,32 +1,32 @@
 package com.github.boyarsky1997.techtask;
 
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Process {
     public static String processing(List<String> values, int maxDuplicates) {
-        StringBuilder result = new StringBuilder();
-        List<String> collect = values.stream().filter(s -> numberDuplicates(s) <= maxDuplicates && numberDuplicates(s) >= 1)
-                .collect(Collectors.toList());
-        System.out.println(collect);
-        String word = collect.stream()
-                .max(Comparator.comparing(String::length)).get();
-        for (int i = 0; i < collect.size(); i++) {
-            if (collect.get(i).equals(word)) {
-                if (i == 0) {
-                    result.append(collect.get(i + 1));
-                    break;
-                } else if (i == collect.size() - 1) {
-                    result.append(collect.get(i - 1));
-                    break;
+        int largestString = 0;
+        int index = 0;
+        for (int i = 0; i < values.size(); i++) {
+            String value = values.get(i);
+            if (numberDuplicates(value) <= maxDuplicates && numberDuplicates(value) >= 1) {
+                if (value.length() > largestString) {
+                    largestString = values.get(i).length();
+                    index = i;
                 }
-                result.append(collect.get(i - 1)).append(collect.get(i + 1));
             }
         }
-        return result.toString();
+        return concatenate(values, index);
+    }
+
+    public static String concatenate(List<String> values, int index) {
+        if (index == 0) {
+            return values.get(index + 1);
+        } else if (index == values.size() - 1) {
+            return values.get(index - 1);
+        }
+        return values.get(index - 1) + (values.get(index + 1));
     }
 
     public static int numberDuplicates(String word) {
