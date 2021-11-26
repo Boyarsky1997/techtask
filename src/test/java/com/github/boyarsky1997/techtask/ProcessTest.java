@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProcessTest {
 
-    static Object[][] testNumberDuplicates() {
+    static Object[][] samplesNumberDuplicates() {
         return new Object[][]{
                 {"RrsrAas", 2},
                 {"RsrAa", 0},
@@ -22,7 +22,7 @@ public class ProcessTest {
         };
     }
 
-    static Object[][] testProcessing() {
+    static Object[][] samplesProcessing() {
         return new Object[][]{
                 {Arrays.asList("ariacn", "avcd", "adddfga", "drrrrrddff", "kk"), 2, "avcddrrrrrddff"},
                 {Arrays.asList("ariaacaaacn", "avcd", "adddfga", "drrrrrddff", "kdf"), 2, "avcd"},
@@ -32,7 +32,7 @@ public class ProcessTest {
         };
     }
 
-    static Object[][] testConcatenate() {
+    static Object[][] samplesConcatenate() {
         return new Object[][]{
                 {Arrays.asList("ariacn", "avcd", "adddfga", "drrrrrddff", "kk"), 2, "avcddrrrrrddff"},
                 {Arrays.asList("ariaacaaacn", "avcd", "adddfga", "drrrrrddff", "kdf"), 0, "avcd"},
@@ -43,20 +43,23 @@ public class ProcessTest {
     }
 
     @ParameterizedTest
-    @MethodSource("testNumberDuplicates")
-    public void dataProviderTest1(String a, int expected) {
+    @MethodSource("samplesNumberDuplicates")
+    public void testNumberDuplicates(String a, int expected) {
+
         Assertions.assertEquals(expected, Process.numberDuplicates(a));
     }
 
     @ParameterizedTest
-    @MethodSource("testProcessing")
-    public void dataProviderTest2(List<String> a, int b, String expected) {
+    @MethodSource("samplesProcessing")
+    public void testProcessing(List<String> a, int b, String expected) {
+
         Assertions.assertEquals(expected, Process.processing(a, b));
     }
 
     @ParameterizedTest
-    @MethodSource("testConcatenate")
-    public void dataProviderTest3(List<String> a, int b, String expected) {
+    @MethodSource("samplesConcatenate")
+    public void testConcatenate(List<String> a, int b, String expected) {
+
         Assertions.assertEquals(expected, Process.concatenate(a, b));
     }
 }
