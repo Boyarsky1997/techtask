@@ -10,8 +10,8 @@ public class Process {
         int index = 0;
         for (int i = 0; i < values.size(); i++) {
             String value = values.get(i);
-            if (numberDuplicates(value) <= maxDuplicates && numberDuplicates(value) >= 1) {
-                if (value.length() > largestString) {
+            if (value.length() > largestString) {
+                if (numberDuplicates(value) <= maxDuplicates) {
                     largestString = values.get(i).length();
                     index = i;
                 }
@@ -38,6 +38,7 @@ public class Process {
             for (int c = i + 1; c < word.length(); c++) {
                 if (word.charAt(i) == word.charAt(c)) {
                     tmp.add(word.charAt(i));
+                    break;
                 }
             }
         }
